@@ -13,4 +13,11 @@ const productsList = [
   }
 ]
 
-module.exports = { productsList }
+const name = "Rubix Cube";
+
+const newProduct = {
+  "id": 4,
+  "name": name
+}
+
+module.exports = { productsList, newProduct, name }

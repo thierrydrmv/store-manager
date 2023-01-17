@@ -30,7 +30,7 @@ describe('teste do service de produtos', function () {
   it('erro ao recuperar um produto', async function () {
     const result = await productsService.findById('a');
     expect(result.type).to.equal('INVALID_VALUE');
-    expect(result.message).to.equal('"id" must be a number')
+    expect(result.message).to.equal('"value" must be a number')
   });
 
   it('produto não encontrado', async function () {
@@ -41,6 +41,26 @@ describe('teste do service de produtos', function () {
     // Assert
     expect(result.type).to.equal('PRODUCT_NOT_FOUND');
     expect(result.message).to.equal('Product not found')
+  });
+
+  it('adicionando um novo produto com sucesso', async function () {
+    // Arrange
+    sinon.stub(productsModel, 'createProduct').resolves(product);
+    // Act
+    const result = await productsService.createProduct('camiseta azul');
+    // Assert
+    expect(result.type).to.equal(null);
+    expect(result.message).to.deep.equal(product)
+  });
+
+  it('falhando ao adicionar um produto novo', async function () {
+    // Arrange
+    sinon.stub(productsModel, 'createProduct').resolves(product);
+    // Act
+    const result = await productsService.createProduct(1);
+    // Assert
+    expect(result.type).to.equal('INVALID_VALUE');
+    expect(result.message).to.equal('"value" must be a string')
   });
 
   afterEach(() => {

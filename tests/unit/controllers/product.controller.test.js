@@ -6,7 +6,7 @@ const { expect } = chai;
 chai.use(sinonChai);
 
 const { productsService } = require('../../../src/services');
-const { productsList } = require('./mocks/products.mock')
+const { productsList, newProduct, name } = require('./mocks/products.mock')
 const { productController } = require('../../../src/controllers');
 
 describe('testando o controller dos produtos', function () {
@@ -58,6 +58,39 @@ describe('testando o controller dos produtos', function () {
     expect(res.status).to.have.been.calledWith(422);
     expect(res.json).to.have.been.calledWith({ message: '"id" must be a number' });
   });
+
+  it('adicionando um produto com sucesso', async function () {
+    const req = { body: newProduct };
+    const res = {};
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(productsService, 'createProduct').resolves({ type: null,  message: name })
+    
+    // Act
+    await productController.createProduct(req, res);
+
+    // Assert
+    expect(res.status).to.have.been.calledWith(201);
+  });
+
+  it('erro ao tentar adicionar um produto', async function () {
+    const req = { body: {name: 123} };
+    const res = {};
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(productsService, 'createProduct').resolves({ type: 'INVALID_VALUE',  message: '"name" length must be at least 5 characters long' })
+    
+    // Act
+    await productController.createProduct(req, res);
+
+    // Assert
+    expect(res.status).to.have.been.calledWith(422);
+    expect(res.json).to.have.been.calledWith('"name" length must be at least 5 characters long');
+
+  });
+
 
   afterEach(() => {
     sinon.restore();

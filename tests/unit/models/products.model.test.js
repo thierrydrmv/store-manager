@@ -21,6 +21,16 @@ describe('teste do model de produtos', function () {
     const result = await productsModel.findById(3);
     expect(result).to.be.deep.equal(products[2])
   });
+  
+  it('adicionando um produto a lista', async function () {
+    // Arrange
+    sinon.stub(connection, 'execute').resolves([{ insertId: 5 }]);
+    // Act
+    const result = await productsModel.createProduct('bob the builder t-shirt');
+    // Assert
+    expect(result).to.equal(5)
+  });
+
   afterEach(() => 
   sinon.restore())
 })
