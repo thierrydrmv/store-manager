@@ -5,7 +5,4 @@ const errorMap = {
 
 const mapError = (type) => errorMap[type] || 500;
 
-module.exports = {
-  mapError,
-  errorMap,
-};
+module.exports = mapError;
