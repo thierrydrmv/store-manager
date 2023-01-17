@@ -57,10 +57,10 @@ describe('teste do service de produtos', function () {
     // Arrange
     sinon.stub(productsModel, 'createProduct').resolves(product);
     // Act
-    const result = await productsService.createProduct(1);
+    const result = await productsService.createProduct('abc');
     // Assert
     expect(result.type).to.equal('INVALID_VALUE');
-    expect(result.message).to.equal('"value" must be a string')
+    expect(result.message).to.equal('"name" length must be at least 5 characters long');
   });
 
   afterEach(() => {

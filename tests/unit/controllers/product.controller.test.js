@@ -87,7 +87,7 @@ describe('testando o controller dos produtos', function () {
 
     // Assert
     expect(res.status).to.have.been.calledWith(422);
-    expect(res.json).to.have.been.calledWith('"name" length must be at least 5 characters long');
+    expect(res.json).to.have.been.calledWith({ message:'"name" length must be at least 5 characters long' });
 
   });
 

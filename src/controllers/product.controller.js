@@ -19,7 +19,7 @@ const getProduct = async (req, res) => {
 const createProduct = async (req, res) => {
   const { name } = req.body;
   const { type, message } = await productsService.createProduct(name);
-  if (type) return res.status(mapError(type)).json(message);
+  if (type) return res.status(mapError(type)).json({ message });
 
   const newProduct = await productsService.findById(message);
   return res.status(201).json(newProduct.message);
