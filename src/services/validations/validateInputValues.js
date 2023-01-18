@@ -16,8 +16,8 @@ const validateProduct = (product) => {
   return { type: null, message: '' };
 };
 
-const validateSale = (sales) => {
-  const { error } = sales.map((sale) => salesSchema.validate(sale)); 
+const validateSale = (_id, itemsSold) => {
+  const { error } = itemsSold.map((sale) => salesSchema.validate(sale)); 
   if (error) {
     return { type: 'INVALID_VALUE', message: error.message };
   }
