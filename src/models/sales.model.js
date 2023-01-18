@@ -20,14 +20,22 @@ const findById = async (saleId) => {
   return camelize(result);
 };
 
-const createSale = async ({ id, itemsSold }) => {
+const getSaleById = async (saleId) => {
+  const [result] = await conn.execute(
+    'SELECT product_id, quantity FROM sales_products WHERE sale_id = ?',
+    [saleId],
+  );
+
+  return camelize(result);
+};
+
+const createSale = async ({ itemsSold }) => {
   const [{ insertId }] = await conn.execute('INSERT INTO sales (date) VALUE (?) ', [new Date()]);
   await Promise.all(itemsSold.map(async (sale) => conn.execute(
       'INSERT INTO sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?)',
-      [id, sale.productId, sale.quantity],
-    )));
-  
-  return insertId;
+      [insertId, sale.productId, sale.quantity],
+  )));
+  return { id: insertId, itemsSold: await getSaleById(insertId) };
 };
 
 module.exports = { findAll, findById, createSale };

@@ -16,11 +16,11 @@ const findById = async (salesId) => {
   return { type: null, message: sale };
 };
 
-const createSale = async (id, itemsSold) => {
-  const error = schema.validateSale(id, itemsSold);
+const createSale = async (itemsSold) => {
+  const error = schema.validateSale(itemsSold);
   if (error.type) return error;
 
-  const sale = await salesModel.createSale({ id, itemsSold });
+  const sale = await salesModel.createSale({ itemsSold });
   return { type: null, message: sale };
 };
 

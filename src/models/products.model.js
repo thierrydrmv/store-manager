@@ -28,4 +28,10 @@ const editProduct = async (product) => {
   return { id: product.id, name: product.name };
 };
 
-module.exports = { findAll, findById, createProduct, editProduct };
+const deleteProduct = async (id) => {
+  await conn.execute(
+    'DELETE FROM products WHERE id = ?', [id],
+  );
+};
+
+module.exports = { findAll, findById, createProduct, editProduct, deleteProduct };
