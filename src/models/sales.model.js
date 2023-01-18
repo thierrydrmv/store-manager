@@ -29,13 +29,18 @@ const getSaleById = async (saleId) => {
   return camelize(result);
 };
 
-const createSale = async ({ itemsSold }) => {
+const saleId = async () => {
   const [{ insertId }] = await conn.execute('INSERT INTO sales (date) VALUE (?) ', [new Date()]);
-  await Promise.all(itemsSold.map(async (sale) => conn.execute(
+  return insertId;
+};
+
+const createSale = async ({ productId, quantity }, id) => {
+  await conn.execute(
       'INSERT INTO sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?)',
-      [insertId, sale.productId, sale.quantity],
-  )));
-  return { id: insertId, itemsSold: await getSaleById(insertId) };
+      [id, productId, quantity],
+  );
+  const [response] = await getSaleById(id); 
+  return response;
 };
 
 const editSale = async (id, sales) => {
@@ -51,4 +56,4 @@ const deleteSale = async (id) => {
   );
 };
 
-module.exports = { findAll, findById, createSale, deleteSale, editSale };
+module.exports = { findAll, findById, createSale, deleteSale, editSale, saleId, getSaleById };
