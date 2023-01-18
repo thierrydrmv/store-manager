@@ -38,4 +38,10 @@ const createSale = async ({ itemsSold }) => {
   return { id: insertId, itemsSold: await getSaleById(insertId) };
 };
 
-module.exports = { findAll, findById, createSale };
+const deleteSale = async (id) => {
+  await conn.execute(
+    'DELETE FROM sales WHERE id = ?', [id],
+  );
+};
+
+module.exports = { findAll, findById, createSale, deleteSale };

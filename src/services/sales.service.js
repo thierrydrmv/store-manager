@@ -24,4 +24,15 @@ const createSale = async (itemsSold) => {
   return { type: null, message: sale };
 };
 
-module.exports = { findAll, findById, createSale };
+const deleteSale = async (id) => {
+  const error = schema.validateId(id);
+  if (error.type) return error;
+
+  const sale = await salesModel.findById(id);
+  if (!sale.length) return { type: 'SALE_NOT_FOUND', message: 'Sale not found' };
+
+  const result = await salesModel.deleteSale(id);
+  return { type: null, message: result };
+};
+
+module.exports = { findAll, findById, createSale, deleteSale };
