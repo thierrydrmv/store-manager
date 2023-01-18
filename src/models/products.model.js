@@ -11,6 +11,13 @@ const findById = async (productId) => {
   return result;
 };
 
+const findByName = async (productName) => {
+  const [result] = await conn.execute(
+    `SELECT * FROM products WHERE name LIKE '%${productName}%'`,
+);
+  return result;
+};
+
 const createProduct = async (product) => {
    const [{ insertId }] = await conn.execute(
     'INSERT INTO products (name) VALUE (?)',
@@ -34,4 +41,4 @@ const deleteProduct = async (id) => {
   );
 };
 
-module.exports = { findAll, findById, createProduct, editProduct, deleteProduct };
+module.exports = { findAll, findById, createProduct, editProduct, deleteProduct, findByName };
