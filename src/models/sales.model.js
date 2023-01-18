@@ -38,10 +38,17 @@ const createSale = async ({ itemsSold }) => {
   return { id: insertId, itemsSold: await getSaleById(insertId) };
 };
 
+const editSale = async (id, sales) => {
+  await Promise.all(sales.map(async (sale) => conn.execute(
+    'UPDATE sales_products SET product_id = ?, quantity = ? WHERE sale_id = ?',
+    [sale.productId, sale.quantity, id],
+)));
+};
+
 const deleteSale = async (id) => {
   await conn.execute(
     'DELETE FROM sales WHERE id = ?', [id],
   );
 };
 
-module.exports = { findAll, findById, createSale, deleteSale };
+module.exports = { findAll, findById, createSale, deleteSale, editSale };

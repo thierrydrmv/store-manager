@@ -23,6 +23,16 @@ const createSales = async (req, res) => {
   return res.status(201).json(message);
 };
 
+const editSale = async (req, res) => {
+  const { id } = req.params;
+  const { body } = req;
+  
+  const { type, message } = await salesService.editSale(id, body);
+  if (type) return res.status(mapError(type)).json({ message });
+
+  return res.status(200).json(message);
+};
+
 const deleteSeal = async (req, res) => {
   const { id } = req.params;
   const { type, message } = await salesService.deleteSale(id);
@@ -31,4 +41,4 @@ const deleteSeal = async (req, res) => {
   return res.status(204).end();
 };
 
-module.exports = { allSales, getSales, createSales, deleteSeal };
+module.exports = { allSales, getSales, createSales, deleteSeal, editSale };
