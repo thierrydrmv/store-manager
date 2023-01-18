@@ -4,4 +4,14 @@ const idSchema = Joi.number().integer().min(1).required();
 
 const productSchema = Joi.string().min(5).required();
 
-module.exports = { idSchema, productSchema };
+const salesSchema = ({
+  productId: idSchema,
+  quantity: idSchema,  
+});
+
+const editProductSchema = Joi.object({
+  id: idSchema,
+  name: productSchema,  
+});
+
+module.exports = { idSchema, productSchema, salesSchema, editProductSchema };

@@ -20,4 +20,12 @@ const createProduct = async (product) => {
   return insertId;
 };
 
-module.exports = { findAll, findById, createProduct };
+const editProduct = async (product) => {
+  await conn.execute(
+      'UPDATE products SET name = ? WHERE id = ?',
+      [product.name, product.id],
+  );
+  return { id: product.id, name: product.name };
+};
+
+module.exports = { findAll, findById, createProduct, editProduct };
