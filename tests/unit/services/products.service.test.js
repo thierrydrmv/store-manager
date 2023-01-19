@@ -63,6 +63,27 @@ describe('teste do service de produtos', function () {
     expect(result.message).to.equal('"name" length must be at least 5 characters long');
   });
 
+  it('recuperando um produto pelo nome', async function () {
+    sinon.stub(productsModel, 'findByName').resolves(product);
+    const result = await productsService.findByName('Martelo');
+    expect(result.type).to.equal(null);
+    expect(result.message).to.equal(product);
+  });
+
+  it('excluindo um produto pelo id', async function () {
+    sinon.stub(productsModel, 'deleteProduct').resolves();
+    const result = await productsService.deleteProduct(1);
+    expect(result.type).to.equal(null);
+    expect(result.message).to.equal(undefined);
+  });
+
+  it('erro ao editar um produto', async function () {
+    sinon.stub(productsModel, 'editProduct').resolves(product);
+    const result = await productsService.editProduct('aaa');
+    expect(result.type).to.equal('INVALID_VALUE');
+    expect(result.message).to.equal('"id" must be a number');
+  })
+
   afterEach(() => {
     sinon.restore();
   });

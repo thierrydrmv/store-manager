@@ -44,11 +44,10 @@ const createSale = async ({ productId, quantity }, id) => {
 };
 
 const editSale = async (sale, id) => {
-  const a = await conn.execute(
+  await conn.execute(
     'UPDATE sales_products SET product_id = ?, quantity = ? WHERE sale_id = ? AND product_id = ?',
     [sale.productId, sale.quantity, id, sale.productId],
   );
-  console.log(a);
 };
 
 const deleteSale = async (id) => {

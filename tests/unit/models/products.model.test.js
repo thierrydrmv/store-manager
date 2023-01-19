@@ -31,6 +31,12 @@ describe('teste do model de produtos', function () {
     expect(result).to.equal(5)
   });
 
+  it('Recuperando um produto da lista pelo nome', async function () {
+    sinon.stub(connection, 'execute').resolves([products[0]])
+    const result = await productsModel.findByName('Martelo');
+    expect(result).to.be.deep.equal(products[0])
+  })
+
   afterEach(() => 
   sinon.restore())
 })

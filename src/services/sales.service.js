@@ -56,10 +56,6 @@ const editSale = async (sale, id) => {
 message:
       { saleId: Number(id), itemsUpdated: await salesModel.getSaleById(id) },
   };
-
-  // const result = await salesModel.editSale({ sale, id });
-  // console.log(result);
-  // return { type: null, message: result };
 };
 
 const deleteSale = async (id) => {
