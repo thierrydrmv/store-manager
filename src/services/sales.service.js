@@ -31,7 +31,7 @@ const createSale = async (itemsSold) => {
   const id = await salesModel.saleId();
   const newSale = itemsSold.map((item) => salesModel.createSale(item, id));
   await Promise.all(newSale);
-  return { type: null, message: { id, itemsSold: await salesModel.getSaleById(id) } };
+  return { type: null, message: { id, itemsSold } };
 };
 
 const editSale = async (sale, id) => {

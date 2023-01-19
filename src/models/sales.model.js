@@ -39,7 +39,6 @@ const createSale = async ({ productId, quantity }, id) => {
       'INSERT INTO sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?)',
       [id, productId, quantity],
   );
-  return id;
 };
 
 const editSale = async (sale, id) => {
