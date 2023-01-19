@@ -53,7 +53,7 @@ const editSale = async (sale, id) => {
   await Promise.all(newSale);
   return {
     type: null,
-message:
+    message:
       { saleId: Number(id), itemsUpdated: await salesModel.getSaleById(id) },
   };
 };

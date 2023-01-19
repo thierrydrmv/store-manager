@@ -2,6 +2,11 @@ const product  = {
     "id": 1,
     "name": "Martelo de Thor"
 }
+
+const productEdited = {
+  "id": 1,
+  "name": "Martelo do chapolin"
+}
   
 const products = [
   {
@@ -18,4 +23,4 @@ const products = [
   }
 ]
 
-module.exports = { product, products }
+module.exports = { product, products, productEdited }

@@ -19,6 +19,19 @@ const sales = [
   }
 ]
 
+const objSale = [
+  {
+    "date": "2023-01-19T12:41:42.000Z",
+    "productId": 1,
+    "quantity": 5
+  },
+  {
+    "date": "2023-01-19T12:41:42.000Z",
+    "productId": 2,
+    "quantity": 10
+  }
+]
+
 const sale = {
     "saleId": 1,
     "date": "2023-01-19T02:00:51.000Z",
@@ -37,6 +50,17 @@ const body = [
   }
 ]
 
+const failBody = [{
+    "productId": 1,
+},]
+  
+const productIdInvalid = [
+  {
+    "productId": 21,
+    "quantity": 1
+  },
+];
+
 const resposta = {
   "id": 4,
   "itemsSold": [
@@ -48,7 +72,7 @@ const resposta = {
       "productId": 2,
       "quantity": 5
     }
-]
+  ]
 }
   
-module.exports = { sale, sales, body, resposta }
+module.exports = { sale, sales, body, resposta, failBody, productIdInvalid, objSale }

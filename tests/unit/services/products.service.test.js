@@ -1,7 +1,9 @@
+const chai = require('chai');
+const sinonChai = require('sinon-chai');
 const { expect } = require('chai');
 const sinon = require('sinon');
 const { productsService } = require('../../../src/services')
-const { product, products } = require('./mocks/products.mock')
+const { product, products, productEdited } = require('./mocks/products.mock')
 const { productsModel } = require('../../../src/models')
 
 describe('teste do service de produtos', function () {
@@ -77,11 +79,18 @@ describe('teste do service de produtos', function () {
     expect(result.message).to.equal(undefined);
   });
 
-  it('erro ao editar um produto', async function () {
+  it('editando um produto', async function () {
     sinon.stub(productsModel, 'editProduct').resolves(product);
     const result = await productsService.editProduct('aaa');
     expect(result.type).to.equal('INVALID_VALUE');
     expect(result.message).to.equal('"id" must be a number');
+  })
+
+  it('erro ao editar um produto', async function () {
+    sinon.stub(productsModel, 'editProduct').resolves(productEdited);
+    const result = await productsService.editProduct(1, 'Martelo do chapolin');
+    expect(result.type).to.equal(null);
+    expect(result.message).to.equal(productEdited);
   })
 
   afterEach(() => {
