@@ -81,7 +81,6 @@ describe('testando o controller dos produtos', function () {
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
     sinon.stub(productsService, 'createProduct').resolves({ type: 'INVALID_VALUE',  message: '"name" length must be at least 5 characters long' })
-    
     // Act
     await productController.createProduct(req, res);
 
