@@ -27,7 +27,7 @@ const editSale = async (req, res) => {
   const { id } = req.params;
   const { body } = req;
   
-  const { type, message } = await salesService.editSale(id, body);
+  const { type, message } = await salesService.editSale(body, id);
   if (type) return res.status(mapError(type)).json({ message });
 
   return res.status(200).json(message);

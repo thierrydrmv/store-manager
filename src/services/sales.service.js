@@ -34,15 +34,32 @@ const createSale = async (itemsSold) => {
   return { type: null, message: { id, itemsSold: await salesModel.getSaleById(id) } };
 };
 
-const editSale = async (id, sale) => {
-  const error = schema.validateSale(sale);
+const editSale = async (sale, id) => {
+  const error = await schema.validateSale(sale);
   if (error.type) return error;
+  const array = sale.map((item) => productsModel.findById(item.productId));
+  const productIdValidation = await Promise.all(array);
+
+  const productIdNotFound = productIdValidation.map((item) => item === undefined);
+  
+  if (productIdNotFound.some((i) => i === true)) {
+    return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
+  }
 
   const findSale = await salesModel.findById(id);
-  if (!findSale) return { type: 'SALE_NOT_FOUND', message: 'Sale not found' };
+  if (!findSale.length) return { type: 'SALE_NOT_FOUND', message: 'Sale not found' };
 
-  const result = await salesModel.editSale({ id, sale });
-  return { type: null, message: result };
+  const newSale = sale.map((item) => salesModel.editSale(item, id));
+  await Promise.all(newSale);
+  return {
+    type: null,
+message:
+      { saleId: Number(id), itemsUpdated: await salesModel.getSaleById(id) },
+  };
+
+  // const result = await salesModel.editSale({ sale, id });
+  // console.log(result);
+  // return { type: null, message: result };
 };
 
 const deleteSale = async (id) => {

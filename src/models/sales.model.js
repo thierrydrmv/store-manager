@@ -43,11 +43,12 @@ const createSale = async ({ productId, quantity }, id) => {
   return response;
 };
 
-const editSale = async (id, sales) => {
-  await Promise.all(sales.map(async (sale) => conn.execute(
-    'UPDATE sales_products SET product_id = ?, quantity = ? WHERE sale_id = ?',
-    [sale.productId, sale.quantity, id],
-)));
+const editSale = async (sale, id) => {
+  const a = await conn.execute(
+    'UPDATE sales_products SET product_id = ?, quantity = ? WHERE sale_id = ? AND product_id = ?',
+    [sale.productId, sale.quantity, id, sale.productId],
+  );
+  console.log(a);
 };
 
 const deleteSale = async (id) => {
