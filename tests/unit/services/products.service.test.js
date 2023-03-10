@@ -6,6 +6,8 @@ const { productsService } = require('../../../src/services')
 const { product, products, productEdited } = require('./mocks/products.mock')
 const { productsModel } = require('../../../src/models')
 
+chai.use(sinonChai);
+
 describe('teste do service de produtos', function () {
   it('recuperando todos os produtos', async function () {
     // Arrange
